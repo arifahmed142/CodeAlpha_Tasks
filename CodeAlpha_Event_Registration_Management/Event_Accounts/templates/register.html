@@ -1,0 +1,46 @@
+{% extends "acc_base.html" %}
+{% load static %}
+{% block title %}
+Registration
+{% endblock title %}
+{% block form_title %}
+Register a Member!
+{% endblock form_title %}
+{% block form %}
+<form action="" method="post" enctype="multipart/form-data" class="pt-12 m-4 border-1">
+{% csrf_token %}
+<table class="mx-[70px] border-separate border-spacing-y-3">
+    <tr class="">
+        <td class="font-bold truncate">Member Name:</td>
+        <td class=""><input type="text" name="name" id="name" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" required></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Member Email:</td>
+        <td class=""><input type="email" name="email" autocomplete="username" id="email" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" required></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Member Phone:</td>
+        <td class=""><input type="text" name="phone" id="phone" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" required></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Type Password:</td>
+        <td class=""><input type="password" name="password" autocomplete="password" id="password" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" required></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Retype Password:</td>
+        <td class=""><input type="password" name="confirm_password" id="confirm_password" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" required></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p id="message"></p></td>
+    </tr>
+    <tr class="">
+        <td class="font-medium truncate">Choose Profile Photo:</td>
+        <td class=""><input type="file" name="profile_photo" id="profile_photo" accept="image/" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" required></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="flex justify-between"><button class="bg-white hover:bg-gray-100 border-1 h-8 w-16 shadow-xl rounded-lg text-gray-500 font-bold" type="reset">Clear</button><button class="ms-6 bg-green-300 hover:bg-green-200 border-0 h-8 w-20 shadow-xl rounded-lg text-gray-500 font-bold" type="submit">Register</button></td>
+    </tr>
+</table>
+</form>
+<button class="bg-white ms-18 text-black font-medium border-1 w-20 h-8 rounded-lg" onclick="window.location.href='{% url 'member_login' %}';" type="button">LOG IN</button>
+{% endblock form %}

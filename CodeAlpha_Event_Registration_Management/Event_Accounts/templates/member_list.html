@@ -1,0 +1,48 @@
+{% extends "acc_base.html" %}
+
+{% load static %}
+
+{% block title %}
+    Member List
+{% endblock title %}
+
+{% block form_title %}
+    Invited Members
+{% endblock form_title %}
+{% block form %}
+    {% if user %}
+        <table class="w-[100%] mt-16">
+            <tr colspan="4" align="center">
+                <td>
+                    <form action="{% url 'search_member'%}" method="post">
+                        {% csrf_token %}
+                        <input type="text" class="border-1 rounded-sm" name="search" id="search" placeholder="Search name or email" required>
+                        <button type="submit" class="bg-green-200 text-black border-1 rounded-sm">Search</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td><br><br>Total Members Found: {{user.count}}<hr></td>
+            </tr>
+            {% for member in user %}
+                <tr class="bg-green-200 ps-6 py-4 w-[100%] flex items-center hover:bg-green-300 duration-200">
+                    <td align="left" class="w-[15%]">
+                        {% if member.profile_photo %}
+                            <img src="{{member.profile_photo.url}}" class="h-[70px] w-[70px]" alt="profile">
+                        {% else %}
+                            <img src="{% static 'Event_Accounts/images/avatar.png' %}" class="h-[70px] w-[70px]" alt="profile">
+                        {% endif %}
+                    </td>
+                    <td align="left" class="w-[25%] font-medium text-gray-600 truncate">{{member.name}}</td>
+                    <td align="left" class="w-[30%] font-medium text-gray-600 truncate">{{member.email}}</td>
+                    <td align="right" class="w-[20%] font-medium text-gray-500">{{member.phone}}</td>
+                </tr>
+                <tr>
+                    <td><hr class="bg-gray-200"></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="my-[150px] text-[40px]" align="center">No Member Registered Yet!</p>
+    {% endif %}
+{% endblock form %}

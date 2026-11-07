@@ -1,0 +1,29 @@
+{% load static %}
+<section class="bg-gray-100 hover:bg-gray-200 duration-300">
+    <div class="flex justify-between px-6 truncate">
+        <div class="flex items-center">
+            <p class="font-bold text-[30px] font-serif text-shadow-xl">Event</p>
+        </div>
+        <div class="flex flex-col items-center">
+            {% if user.is_superuser %}
+                <a class="not mt-2 font-bold truncate text-gray-600 hover:text-shadow-green-100 text-shadow-lg" href="{% url 'member_list' %}">RESIGTERED MEMBER</a>
+            {% else %}
+                <a class="not mt-2 font-bold truncate text-gray-600 hover:text-shadow-green-100 text-shadow-lg" href="#">RESIGTERED MEMBER</a>
+                <p class="notification">Only Admin can see this!</p>
+            {% endif %}
+        </div>
+        <div class="flex items-center gap-2">
+            {% if user.is_authenticated %}
+                {% if user.profile_photo %}
+                    <img src="{{user.profile_photo.url}}" class="h-[30px] w-[30px]" alt="Profile">
+                {% else %}
+                    <img src="{% static 'Event_Accounts/images/avatar.png' %}" class="h-[30px] w-[30px]" alt="Profile">
+                {% endif %}
+                <a href="{% url 'member_profile' %}" class="hover:text-green-400">{{user.name}}</a>
+            {% else %}
+                <a class="font-bold text-green-900 hover:text-green-400" href="{% url 'member_login' %}"> LOGIN</a>
+                <a class="font-bold text-green-900 ms-5 hover:text-green-400" href="{% url 'member_register' %}">REGISTER</a>
+            {% endif %}
+        </div>
+    </div>
+</section>

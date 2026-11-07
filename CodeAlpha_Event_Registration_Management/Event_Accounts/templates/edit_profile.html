@@ -1,0 +1,49 @@
+{% extends "acc_base.html" %}
+{% load static %}
+{% block title %}
+Edit Profile
+{% endblock title %}
+{% block form_title %}
+Editing for {{user.name}}
+{% endblock form_title %}
+{% block form %}
+<form action="{% url 'edited_profile' %}" method="post" enctype="multipart/form-data" class="pt-12">
+{% csrf_token %}
+<table class="mx-[70px] border-separate border-spacing-y-3">
+    <tr class="">
+        <td class="font-bold truncate">Name:</td>
+        <td class=""><input type="text" name="name" id="name" value="{{user.name}}" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" ></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Current Email:</td>
+        <td class=""><p class="h-[30px] ps-[10px] w-[300px] font-medium font-sans">{{user.email}}</p>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Email:</td>
+        <td class=""><input type="email" name="email" id="email" value="{{user.email}}" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" ></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Phone:</td>
+        <td class=""><input type="text" name="phone" id="phone" value="{{user.phone}}" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" ></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">New Password:</td>
+        <td class=""><input type="password" placeholder="Type if You need to change" name="password" id="password" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" ></td>
+    </tr>
+    <tr class="">
+        <td class="font-bold truncate">Re-type New Password:</td>
+        <td class=""><input type="password" name="confirm_password" id="confirm_password" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1" ></td>
+    </tr>
+    <tr>
+        <td colspan="2"><p id="message"></p></td>
+    </tr>
+    <tr class="">
+        <td class="font-medium truncate">Choose Profile Photo:</td>
+        <td class=""><input type="file" name="profile_photo" id="profile_photo" accept="image/" class="rounded-lg h-[30px] ps-[10px] w-[300px] font-light font-sans border-1"></td>
+    </tr>
+    <tr>
+        <td colspan="2" class="flex justify-between"><button class="bg-white hover:bg-gray-100 border-1 h-8 w-16 shadow-xl rounded-lg text-gray-500 font-bold" type="reset">Clear</button><button class="ms-6 bg-green-300 hover:bg-green-200 border-0 h-8 w-20 shadow-xl rounded-lg text-gray-500 font-bold" type="submit">Edit</button></td>
+    </tr>
+</table>
+</form>
+{% endblock form %}

@@ -1,0 +1,30 @@
+{% extends "acc_base.html" %}
+{% load static %}
+{% block title %}
+Login
+{% endblock title %}
+{% block form_title %}
+Member Login
+{% endblock form_title %}
+{% block form %}
+<form method="post" class="pt-12 border-1 m-4">
+    {% csrf_token %}
+    <table class="mx-[70px] border-separate border-spacing-y-3 w-[10px]">
+        <tr class="">
+            <td class="font-bold truncate">Member Email:</td>
+            <td class=""><input type="email" name="email" autocomplete="username" id="email" class="rounded-lg h-[30px] w-[300px] font-light font-sans border-1" required></td>
+        </tr>
+        <tr class="">
+            <td class="font-bold truncate">Type Password:</td>
+            <td class=""><input type="password" name="password" autocomplete="password" id="password" class="rounded-lg h-[30px] w-[300px] font-light font-sans border-1" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="flex justify-between">
+                <button class="bg-white border-1 h-8 w-16 shadow-xl rounded-lg text-gray-500 font-bold" type="reset">Clear</button>
+                <button class="bg-green-300 ms-4 border-0 h-8 w-20 shadow-xl rounded-lg text-gray-500 font-bold" type="submit">Login</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<button class="bg-white ms-18 text-black font-medium border-1 w-20 h-8 rounded-lg" onclick="window.location.href='{% url 'member_register' %}'" type="button">REGISTER</button>
+{% endblock form %}

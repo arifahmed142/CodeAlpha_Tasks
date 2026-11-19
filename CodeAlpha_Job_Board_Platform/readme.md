@@ -340,7 +340,7 @@ If you would like to contribute:
 Backend Development | Python | Django
 
 - GitHub: [My GitHub Profile](https://github.com/arifahmed142)
-- LinkedIn: [My LinkedIn Profile]((https://www.linkedin.com/in/arif-ahmed-970147289/)
+- LinkedIn: [My LinkedIn Profile](https://www.linkedin.com/in/arif-ahmed-970147289/)
 
 ---
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <title>
+            {% block title %}
+                Job board Platform
+            {% endblock title %}
+        </title>
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+                background-image: radial-gradient(circle, rgb(149, 154, 211), rgb(177, 195, 211), white);
+            }
+        </style>
+    </head>
+    <body>
+        {% include "resources/header.html" %}
+        {% block content %}
+        
+        {% endblock content %}
+    </body>
+</html>

@@ -1,0 +1,28 @@
+{% load static %}
+<nav class="flex justify-between items-center bg-gray-200 sticky p-2">
+    <div>
+        <a href="{% url 'Home' %}"
+            class="text-2xl font-bold text-blue-700 tracking-tight">
+            Job<span class="text-gray-900"> Board</span>
+        </a>
+    </div>
+    <div class="flex gap-10">
+        <a href="{% url 'Home' %}" class="font-medium">Home</a>
+        <a href="{% url 'Intern' %}" class="font-medium">Intership</a>
+        <a href="{% url 'onsite' %}" class="font-medium">On-site</a>
+        <a href="{% url 'remote' %}" class="font-medium">Remote</a>
+    </div>
+    <div class="flex justify-center gap-6 items-center">
+        {% if user.is_authenticated %}
+            {% if user.profile_photo %}
+                <img src="{{user.profile_photo.url}}" height="40px" width="40px" alt="Profile Photo">
+            {% else %}
+                <img src="{% static 'Users/img/avatar.png' %}" height="40px" width="40px" alt="Profile Photo" alt="Profile Picture">
+            {% endif %}
+            <a href="{% url 'Profile' %}">{{user.name}}</a>
+        {% else %}
+            <a href="{% url 'Login' %}">SIGN IN</a>
+            <a href="{% url 'Register' %}">REGISTER</a>
+        {% endif %}
+    </div>
+</nav>

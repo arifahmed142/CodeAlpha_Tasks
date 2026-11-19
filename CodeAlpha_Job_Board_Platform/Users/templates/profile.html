@@ -1,0 +1,380 @@
+{% extends "resource/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ user.name }}
+{% endblock title %}
+
+{% block heading %}
+    User Profile
+{% endblock heading %}
+
+{% block content %}
+
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+
+            <div class="flex flex-col md:flex-row items-center gap-6">
+
+                <div class="flex flex-col items-center gap-3">
+
+                    {% if user.profile_photo %}
+                        <img src="{{ user.profile_photo.url }}"
+                             class="w-32 h-32 rounded-full object-cover border-4 border-blue-100 user_profile_element"
+                             alt="Profile Picture">
+                    {% else %}
+                        <img src="{% static 'Users/img/avatar.png' %}"
+                             class="w-32 h-32 rounded-full object-cover border-4 border-blue-100 user_profile_element"
+                             alt="Profile Picture">
+                    {% endif %}
+
+                    <div class="user_profile_edit hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Change Profile Photo
+                        </label>
+                        <input type="file" name="profile_photo" id="profile_photo"
+                               class="block w-full text-sm text-gray-600">
+                    </div>
+
+                </div>
+
+                <div class="flex-1 text-center md:text-left">
+
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 user_profile_element">
+                        {{ user.name }}
+                    </h2>
+
+                    {% if user.is_candidate %}
+                        <p class="text-blue-600 font-medium mt-1 user_profile_element">
+                            Candidate
+                        </p>
+                    {% elif user.is_employer %}
+                        <p class="text-green-600 font-medium mt-1 user_profile_element">
+                            Employer
+                        </p>
+                    {% endif %}
+
+                    <input placeholder="{{ user.name }}" type="text" name="name"
+                           id="name" maxlength="30"
+                           placeholder="Your name"
+                           class="user_profile_edit hidden w-full max-w-md mt-3 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+
+                    <p class="text-sm text-gray-500 mt-3">
+                        {% if user.is_candidate %}
+                            Manage your personal and Educational information.
+                        {% elif user.is_employer %}
+                            Manage your personal and professional information.
+                        {% endif %}
+                    </p>
+
+                </div>
+                <div>
+                    {% if user.is_candidate %}
+                        <a href="{% url 'Applied' %}" class="p-2 bg-gray-200 hover:bg-green-400 rounded-xl duration-200">Applied Jobs-></a>
+                    {% elif user.is_employer %}
+                        <a href="{% url 'Job_List' %}" class="p-2 bg-gray-200 hover:bg-green-400 rounded-xl duration-200">Posted Jobs-></a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+
+            <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Personal Information</h3>
+                <p class="text-sm text-gray-500 mt-1">Your basic account and contact details.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Username</label>
+                    <p class="text-gray-800 font-medium">{{ user.username }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Email Address</label>
+                    <p class="user_profile_element text-gray-800">{{ user.email }}</p>
+                    <input placeholder="{{ user.email }}" type="text" name="email"
+                           id="email" maxlength="50"
+                           class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Phone Number</label>
+                    <p class="user_profile_element text-gray-800">{{ user.phone }}</p>
+                    <input placeholder="{{ user.phone }}" type="text" name="phone"
+                           id="phone" maxlength="11"
+                           class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Blood Group</label>
+                    <p class="user_profile_element text-gray-800">
+                        {% if user.blood_group %}{{ user.blood_group }}{% else %}N/A{% endif %}
+                    </p>
+
+                    <select name="blood_group" id="blood_group"
+                            class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <option value="N/A">Select Blood Group</option>
+                        <option value="A+" {% if user.blood_group == "A+" %}selected{% endif %}>A+</option>
+                        <option value="A-" {% if user.blood_group == "A-" %}selected{% endif %}>A-</option>
+                        <option value="B+" {% if user.blood_group == "B+" %}selected{% endif %}>B+</option>
+                        <option value="B-" {% if user.blood_group == "B-" %}selected{% endif %}>B-</option>
+                        <option value="O+" {% if user.blood_group == "O+" %}selected{% endif %}>O+</option>
+                        <option value="O-" {% if user.blood_group == "O-" %}selected{% endif %}>O-</option>
+                        <option value="AB+" {% if user.blood_group == "AB+" %}selected{% endif %}>AB+</option>
+                        <option value="AB-" {% if user.blood_group == "AB-" %}selected{% endif %}>AB-</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Nationality</label>
+                    <p class="user_profile_element text-gray-800">
+                        {% if user.nationality %}{{ user.nationality }}{% else %}N/A{% endif %}
+                    </p>
+                    <input placeholder="{{ user.nationality }}" type="text" name="nationality"
+                           id="nationality" maxlength="22"
+                           class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Present Address</label>
+                    <p class="user_profile_element text-gray-800">
+                        {% if user.present_address %}{{ user.present_address }}{% else %}N/A{% endif %}
+                    </p>
+                    <input placeholder="{{ user.present_address }}" type="text" name="present_address"
+                           id="present_address" maxlength="200"
+                           class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-500 mb-2">Permanent Address</label>
+                    <p class="user_profile_element text-gray-800">
+                        {% if user.permanent_address %}{{ user.permanent_address }}{% else %}N/A{% endif %}
+                    </p>
+                    <input placeholder="{{ user.permanent_address }}" type="text" name="permanent_address"
+                           id="permanent_address" maxlength="200"
+                           class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                </div>
+                {% if user.is_candidate %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">Resume</label>
+                        <div class="user_profile_element">
+                            {% if user.resume %}
+                                <a href="{{ user.resume.url }}" class="text-blue-600 hover:underline font-medium" target="_blank">
+                                    Download Resume
+                                </a>
+                            {% else %}
+                                <p class="text-gray-500">N/A</p>
+                            {% endif %}
+                        </div>
+                        <input type="file" name="resume" id="resume"
+                               class="user_profile_edit hidden w-full text-sm text-gray-600">
+                    </div>
+
+                {% elif user.is_employer %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">CV</label>
+                        <div class="user_profile_element">
+                            {% if user.cv %}
+                                <a href="{{ user.cv.url }}" class="text-blue-600 hover:underline font-medium" target="_blank">
+                                    Download CV
+                                </a>
+                            {% else %}
+                                <p class="text-gray-500">N/A</p>
+                            {% endif %}
+                        </div>
+                        <input type="file" name="cv" id="cv"
+                               class="user_profile_edit hidden w-full text-sm text-gray-600">
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+        {% if user.is_candidate %}
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">Educational Information</h3>
+                    <p class="text-sm text-gray-500 mt-1">Your academic background.</p>
+                </div>
+
+                <!-- SSC -->
+                <div class="mb-8">
+                    <h4 class="font-semibold text-blue-600 mb-4">SSC - Secondary School Certificate</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-2">Board</label>
+                            <p class="user_profile_element text-gray-800">
+                                {% if user.ssc_board %}{{ user.ssc_board }}{% else %}N/A{% endif %}
+                            </p>
+                            <input placeholder="{{ user.ssc_board }}" type="text" name="ssc_board"
+                                   id="ssc_board" maxlength="10"
+                                   class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-2">Institution</label>
+                            <p class="user_profile_element text-gray-800">
+                                {% if user.ssc_institution %}{{ user.ssc_institution }}{% else %}N/A{% endif %}
+                            </p>
+                            <input placeholder="{{ user.ssc_institution }}" type="text" name="ssc_institution"
+                                   id="ssc_institution" maxlength="50"
+                                   class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-2">Result</label>
+                            <p class="user_profile_element text-gray-800">
+                                {% if user.ssc_result %}{{ user.ssc_result }}{% else %}N/A{% endif %}
+                            </p>
+                            <input placeholder="{{ user.ssc_result }}" type="text" name="ssc_result"
+                                   id="ssc_result" maxlength="4"
+                                   class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+
+                    </div>
+                </div>
+
+                <hr class="border-gray-200 my-6">
+
+                <div>
+                    <h4 class="font-semibold text-blue-600 mb-4">HSC - Higher Secondary School Certificate</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-2">Board</label>
+                            <p class="user_profile_element text-gray-800">
+                                {% if user.hsc_board %}{{ user.hsc_board }}{% else %}N/A{% endif %}
+                            </p>
+                            <input placeholder="{{ user.hsc_board }}" type="text" name="hsc_board"
+                                   id="hsc_board" maxlength="10"
+                                   class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-2">Institution</label>
+                            <p class="user_profile_element text-gray-800">
+                                {% if user.hsc_institution %}{{ user.hsc_institution }}{% else %}N/A{% endif %}
+                            </p>
+                            <input placeholder="{{ user.hsc_institution }}" type="text" name="hsc_institution"
+                                   id="hsc_institution" maxlength="50"
+                                   class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 mb-2">Result</label>
+                            <p class="user_profile_element text-gray-800">
+                                {% if user.hsc_result %}{{ user.hsc_result }}{% else %}N/A{% endif %}
+                            </p>
+                            <input placeholder="{{ user.hsc_result }}" type="text" name="hsc_result"
+                                   id="hsc_result" maxlength="4"
+                                   class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        {% elif user.is_employer %}
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
+
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">Professional Information</h3>
+                    <p class="text-sm text-gray-500 mt-1">Your current employment details.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">Company</label>
+                        <p class="user_profile_element text-gray-800">
+                            {% if user.working_company %}{{ user.working_company }}{% else %}N/A{% endif %}
+                        </p>
+                        <input placeholder="{{ user.working_company }}" type="text" name="working_company"
+                               id="working_company" maxlength="100"
+                               class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">Designation</label>
+                        <p class="user_profile_element text-gray-800">
+                            {% if user.designation %}{{ user.designation }}{% else %}N/A{% endif %}
+                        </p>
+                        <input placeholder="{{ user.designation }}" type="text" name="designation"
+                               id="designation" maxlength="50"
+                               class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 mb-2">Working Time</label>
+                        <p class="user_profile_element text-gray-800">
+                            {% if user.working_time %}{{ user.working_time }}{% else %}N/A{% endif %}
+                        </p>
+
+                        <select name="working_time" id="working_time"
+                                class="user_profile_edit hidden w-full px-4 py-2 border border-gray-300 rounded-lg">
+                            <option value="N/A">Select Option</option>
+                            <option value="Full-Time" {% if user.working_time == "Full-Time" %}selected{% endif %}>Full-Time</option>
+                            <option value="Part-Time" {% if user.working_time == "Part-Time" %}selected{% endif %}>Part-Time</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+        <div class="flex justify-center gap-3">
+
+            <button type="button" onclick="edit()"
+                    class="user_profile_element px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+                Edit Profile
+            </button>
+
+            <button type="submit"
+                    class="user_profile_edit hidden px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                Save Changes
+            </button>
+
+        </div>
+
+    </form>
+
+    <div class="mt-6 flex justify-center">
+        <form action="{% url 'Logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit"
+                    class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition">
+                Logout
+            </button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    function edit(){
+
+        let settled_element = document.querySelectorAll('.user_profile_element');
+        let changable_element = document.querySelectorAll('.user_profile_edit');
+
+        for(let i = 0; i < settled_element.length; i++){
+            settled_element[i].classList.add('hidden');
+        }
+
+        for(let i = 0; i < changable_element.length; i++){
+            changable_element[i].classList.remove('hidden');
+        }
+
+    }
+</script>
+
+{% endblock content %}

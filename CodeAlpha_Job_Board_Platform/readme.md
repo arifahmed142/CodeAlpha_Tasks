@@ -335,12 +335,12 @@ If you would like to contribute:
 
 ## Author
 
-**Your Name**
+**Md. Arif Ahmed**
 
 Backend Development | Python | Django
 
-- GitHub: [Your GitHub Profile](https://github.com/YOUR_USERNAME)
-- LinkedIn: [Your LinkedIn Profile](https://www.linkedin.com/in/YOUR_LINKEDIN_USERNAME/)
+- GitHub: [Your GitHub Profile](https://github.com/arifahmed142)
+- LinkedIn: [Your LinkedIn Profile]((https://www.linkedin.com/in/arif-ahmed-970147289/)
 
 ---
 
